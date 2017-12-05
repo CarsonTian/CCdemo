@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -136,6 +137,35 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         fmp.bottomMargin = virtualKeyHeight() + 16;
 
         initMessageList();
+
+
+        // 屏蔽摄像功能
+        boolean stutes = i.getBooleanExtra(ConstantApp.ACTION_KEY_MEMBER_STUTES, false); // 身份，是否是观众
+        ImageView mute_voince = (ImageView) findViewById(R.id.button_action_mute);
+        ImageButton mute_video = (ImageButton) findViewById(R.id.button_changeTo_voince);
+
+        mute_voince.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onVoiceMuteClicked(view);
+            }
+        });
+
+        mute_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onVoiceChatClicked(view);
+            }
+        });
+
+
+
+        // mute_video.setVisibility(View.GONE);
+
+        if (stutes) {
+            mute_voince.setVisibility(View.GONE);
+        }
+
     }
 
     public void onClickHideIME(View view) {
@@ -149,7 +179,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
     }
 
     private InChannelMessageListAdapter mMsgAdapter;
-
     private ArrayList<Message> mMsgList;
 
     private void initMessageList() {
@@ -329,7 +358,10 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         }
     }
 
-    public void onVoiceChatClicked(View view) {
+
+
+
+        public void onVoiceChatClicked(View view) {
         log.info("onVoiceChatClicked " + view + " " + mUidsList.size() + " video_status: " + mVideoMuted + " audio_status: " + mAudioMuted);
         if (mUidsList.size() == 0) {
             return;

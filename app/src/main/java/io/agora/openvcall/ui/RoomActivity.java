@@ -1,5 +1,6 @@
 package io.agora.openvcall.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -49,10 +50,11 @@ public class RoomActivity extends BaseActivity {
     }
 
     public void onClickJoin(View view) {
-        forwardToRoom();
+        boolean ifAudience = false;
+        forwardToRoom(ifAudience);
     }
 
-    public void forwardToRoom() {
+    public void forwardToRoom(boolean b) {
         //EditText v_channel = (EditText) findViewById(R.id.channel_name);
         //String channel = v_channel.getText().toString();
         //vSettings().mChannelName = channel;
@@ -65,11 +67,12 @@ public class RoomActivity extends BaseActivity {
         i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, channelName);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, encryptionKey);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, getResources().getStringArray(R.array.encryption_mode_values)[vSettings().mEncryptionModeIndex]);
-
+        i.putExtra(ConstantApp.ACTION_KEY_MEMBER_STUTES, b);
         startActivity(i);
     }
 
     public void onClickJoin2(View view) {
-
+        boolean ifAudience = true;
+        forwardToRoom(ifAudience);
     }
 }

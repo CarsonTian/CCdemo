@@ -11,15 +11,16 @@
         android:id="@+id/grid_video_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ViewStub
         android:id="@id/small_video_view_dock"
-        android:inflatedId="@id/small_video_view_dock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout="@layout/small_video_view_dock" />
+        android:inflatedId="@id/small_video_view_dock"
+        android:layout="@layout/small_video_view_dock"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,13 +99,14 @@
                     android:orientation="horizontal"
                     android:layout_centerInParent="true">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/button_changeTo_voince"
                         android:layout_width="54dp"
                         android:layout_height="match_parent"
                         android:onClick="onVoiceChatClicked"
                         android:scaleType="center"
                         android:src="@drawable/btn_voice"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
 
                     <ImageView
                         android:id="@id/customized_function_id"
@@ -113,14 +115,15 @@
                         android:onClick="onCustomizedFunctionClicked"
                         android:scaleType="center"
                         android:src="@drawable/btn_switch_camera"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
 
                     <ImageView
+                        android:id="@+id/button_action_mute"
                         android:layout_width="54dp"
                         android:layout_height="match_parent"
+                        android:onClick="onVoiceMuteClicked"
                         android:scaleType="center"
-                        android:src="@drawable/btn_mute"
-                        android:onClick="onVoiceMuteClicked" />
+                        android:src="@drawable/btn_mute" />
 
                 </LinearLayout>
 
