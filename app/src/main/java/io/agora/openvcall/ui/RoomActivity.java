@@ -68,4 +68,8 @@ public class RoomActivity extends BaseActivity {
 
         startActivity(i);
     }
+
+    public void onClickJoin2(View view) {
+
+    }
 }

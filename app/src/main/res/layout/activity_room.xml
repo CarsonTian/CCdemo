@@ -12,38 +12,108 @@
             android:id="@+id/channel_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="6dp"
-            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:textColor="@android:color/white" />
+            android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/msg_list"
             android:layout_width="200dp"
-            android:layout_height="370dp"
+            android:layout_height="300dp"
             android:layout_below="@+id/channel_name"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_blue_dark" />
 
         <ImageButton
             android:id="@+id/position1"
-            app:srcCompat="@drawable/ic_account_box"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:onClick="onClickJoin"
             android:layout_alignTop="@+id/msg_list"
             android:layout_toLeftOf="@+id/msg_list"
-            android:layout_toStartOf="@+id/msg_list" />
+            android:layout_toStartOf="@+id/msg_list"
+            android:onClick="onClickJoin"
+            app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
             android:id="@+id/position2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/position4"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/position4"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/position"
+            android:layout_marginTop="18dp"
+            android:layout_toLeftOf="@+id/msg_list"
+            android:layout_toStartOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/msg_list"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@+id/position1"
             android:layout_marginTop="17dp"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/audience1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/position4"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/position4"
+            android:layout_marginBottom="54dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp"
+            android:onClick="onClickJoin2"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/audience2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/audience1"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/audience3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignEnd="@+id/position2"
+            android:layout_alignRight="@+id/position2"
+            android:layout_alignTop="@+id/audience2"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             app:srcCompat="@drawable/ic_account_box" />
 
     </RelativeLayout>
