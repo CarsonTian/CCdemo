@@ -144,21 +144,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         ImageView mute_voince = (ImageView) findViewById(R.id.button_action_mute);
         ImageButton mute_video = (ImageButton) findViewById(R.id.button_changeTo_voince);
 
-        mute_voince.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onVoiceMuteClicked(view);
-            }
-        });
-
-        mute_video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onVoiceChatClicked(view);
-            }
-        });
-
-
+        shutDownVideo();
 
         // mute_video.setVisibility(View.GONE);
 
@@ -391,6 +377,30 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         hideLocalView(mVideoMuted);
 
         if (mVideoMuted) {
+            resetToVideoDisabledUI();
+        } else {
+            resetToVideoEnabledUI();
+        }
+    }
+
+    private void shutDownVideo(){
+        RtcEngine rtcEngine = rtcEngine();
+        boolean mVideoMuted1 = true;
+
+        if (mVideoMuted1) {
+            rtcEngine.disableVideo();
+        } else {
+            rtcEngine.enableVideo();
+        }
+
+        //ImageView iv = (ImageView) view;
+
+        //iv.setImageResource(mVideoMuted1 ? R.drawable.btn_video : R.drawable.btn_voice);
+
+        //隐藏小窗口
+        hideLocalView(mVideoMuted1);
+
+        if (mVideoMuted1) {
             resetToVideoDisabledUI();
         } else {
             resetToVideoEnabledUI();
