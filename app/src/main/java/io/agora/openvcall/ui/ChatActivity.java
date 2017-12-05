@@ -293,7 +293,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
     @Override
     protected void deInitUIandEvent() {
         optionalDestroy();
-
         doLeaveChannel();
         event().removeEventHandler(this);
 
@@ -307,7 +306,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
 
     public void onEndCallClicked(View view) {
         log.info("onEndCallClicked " + view);
-
         finish();
     }
 
@@ -357,6 +355,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
 
         iv.setImageResource(mVideoMuted ? R.drawable.btn_video : R.drawable.btn_voice);
 
+        //隐藏小窗口
         hideLocalView(mVideoMuted);
 
         if (mVideoMuted) {

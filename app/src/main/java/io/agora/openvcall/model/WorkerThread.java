@@ -233,7 +233,8 @@ public class WorkerThread extends Thread {
                 throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
             }
             mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_COMMUNICATION);
-            mRtcEngine.enableVideo();
+            //mRtcEngine.enableVideo(); // 开启摄像头
+            mRtcEngine.disableVideo();
             mRtcEngine.enableAudioVolumeIndication(200, 3); // 200 ms
             mRtcEngine.setLogFile(Environment.getExternalStorageDirectory()
                     + File.separator + mContext.getPackageName() + "/log/agora-rtc.log");

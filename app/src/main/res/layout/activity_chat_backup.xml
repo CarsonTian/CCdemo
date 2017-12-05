@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,8 +9,7 @@
     <io.agora.openvcall.ui.GridVideoViewContainer
         android:id="@+id/grid_video_view_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent" />
 
     <ViewStub
         android:id="@id/small_video_view_dock"
@@ -24,27 +22,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/position6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignTop="@+id/msg_list"
-            android:layout_toLeftOf="@+id/msg_list"
-            android:layout_toStartOf="@+id/msg_list"
-            android:onClick="onClickJoin1"
-            app:srcCompat="@drawable/ic_account_box" />
-
-        <ImageButton
-            android:id="@+id/position7"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@+id/bottom_container"
-            android:layout_alignLeft="@+id/msg_list"
-            android:layout_alignStart="@+id/msg_list"
-            android:layout_marginBottom="16dp"
-            android:onClick="onClickJoin2"
-            app:srcCompat="@drawable/ic_account_box" />
 
         <TextView
             android:id="@+id/channel_name"
@@ -101,19 +78,17 @@
                     <ImageView
                         android:layout_width="54dp"
                         android:layout_height="match_parent"
-                        android:onClick="onVoiceChatClicked"
                         android:scaleType="center"
                         android:src="@drawable/btn_voice"
-                        android:visibility="invisible" />
+                        android:onClick="onVoiceChatClicked" />
 
                     <ImageView
                         android:id="@id/customized_function_id"
                         android:layout_width="54dp"
                         android:layout_height="match_parent"
-                        android:onClick="onCustomizedFunctionClicked"
                         android:scaleType="center"
                         android:src="@drawable/btn_switch_camera"
-                        android:visibility="invisible" />
+                        android:onClick="onCustomizedFunctionClicked" />
 
                     <ImageView
                         android:layout_width="54dp"
@@ -127,13 +102,12 @@
                 <ImageView
                     android:layout_width="54dp"
                     android:layout_height="match_parent"
+                    android:scaleType="center"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:onClick="onBtnNClicked"
-                    android:scaleType="center"
                     android:src="@drawable/btn_filter"
-                    android:visibility="invisible" />
+                    android:onClick="onBtnNClicked" />
 
             </RelativeLayout>
 
@@ -172,12 +146,9 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/msg_list"
-            android:layout_width="200dp"
-            android:layout_height="300dp"
-            android:layout_below="@+id/channel_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="42dp"
-            android:background="@android:color/holo_blue_dark" />
+            android:layout_width="272dp"
+            android:layout_height="144dp"
+            android:layout_above="@id/bottom_container" />
 
     </RelativeLayout>
 </FrameLayout>
