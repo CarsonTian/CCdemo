@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,7 +16,12 @@ import io.agora.openvcall.model.ConstantApp;
  * Created by tianjq1 on 2017/12/5.
  */
 
-public class RoomActivity  extends BaseActivity {
+public class RoomActivity extends BaseActivity {
+
+    String channelName;
+    String encryptionKey;
+    String encryptionMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +33,11 @@ public class RoomActivity  extends BaseActivity {
 
         Intent i = getIntent();
 
-        String channelName = i.getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME);
+        channelName = i.getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME);
 
-        final String encryptionKey = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY);
+        encryptionKey = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY);
 
-        final String encryptionMode = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE);
+        encryptionMode = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE);
 
         TextView textChannelName = (TextView) findViewById(R.id.channel_name);
         textChannelName.setText(channelName);
@@ -40,5 +46,26 @@ public class RoomActivity  extends BaseActivity {
     @Override
     protected void deInitUIandEvent() {
 
+    }
+
+    public void onClickJoin(View view) {
+        forwardToRoom();
+    }
+
+    public void forwardToRoom() {
+        //EditText v_channel = (EditText) findViewById(R.id.channel_name);
+        //String channel = v_channel.getText().toString();
+        //vSettings().mChannelName = channel;
+
+        //EditText v_encryption_key = (EditText) findViewById(R.id.encryption_key);
+        //String encryption = v_encryption_key.getText().toString();
+        //vSettings().mEncryptionKey = encryption;
+
+        Intent i = new Intent(RoomActivity.this, ChatActivity.class);
+        i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, channelName);
+        i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, encryptionKey);
+        i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, getResources().getStringArray(R.array.encryption_mode_values)[vSettings().mEncryptionModeIndex]);
+
+        startActivity(i);
     }
 }
