@@ -1,12 +1,15 @@
 package io.agora.openvcall.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import io.agora.openvcall.R;
+import io.agora.openvcall.model.ConstantApp;
 
 /**
  * Created by tianjq1 on 2017/12/5.
@@ -18,26 +21,20 @@ public class RoomActivity  extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
     }
+
     @Override
     protected void initUIandEvent() {
-        EditText v_channel = (EditText) findViewById(R.id.channel_name);
-        v_channel.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+        Intent i = getIntent();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        String channelName = i.getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME);
 
-            }
+        final String encryptionKey = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY);
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                boolean isEmpty = TextUtils.isEmpty(s.toString());
-                findViewById(R.id.button_join).setEnabled(!isEmpty);
-            }
-        });
+        final String encryptionMode = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE);
+
+        TextView textChannelName = (TextView) findViewById(R.id.channel_name);
+        textChannelName.setText(channelName);
     }
 
     @Override
