@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewStub;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -139,15 +142,25 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         initMessageList();
 
 
-        // 屏蔽摄像功能
+        // 自动跳转为语音模式
+        Button test = (Button) findViewById(R.id.button_test);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RtcEngine rtcEngine = rtcEngine();
+                mVideoMuted = !mVideoMuted;
+                rtcEngine.disableVideo(); // 禁止摄像头
+                hideLocalView(mVideoMuted); // 隐藏小窗口
+                resetToVideoDisabledUI();  // 改变背景和按钮
+
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            test.callOnClick();
+        }
+
         boolean stutes = i.getBooleanExtra(ConstantApp.ACTION_KEY_MEMBER_STUTES, false); // 身份，是否是观众
         ImageView mute_voince = (ImageView) findViewById(R.id.button_action_mute);
-        ImageButton mute_video = (ImageButton) findViewById(R.id.button_changeTo_voince);
-
-        shutDownVideo();
-
-        // mute_video.setVisibility(View.GONE);
-
         if (stutes) {
             mute_voince.setVisibility(View.GONE);
         }
@@ -345,9 +358,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
     }
 
 
-
-
-        public void onVoiceChatClicked(View view) {
+    public void onVoiceChatClicked(View view) {
         log.info("onVoiceChatClicked " + view + " " + mUidsList.size() + " video_status: " + mVideoMuted + " audio_status: " + mAudioMuted);
         if (mUidsList.size() == 0) {
             return;
@@ -364,9 +375,10 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         mVideoMuted = !mVideoMuted;
 
         if (mVideoMuted) {
-            rtcEngine.disableVideo();
+            //rtcEngine.disableVideo();
         } else {
-            rtcEngine.enableVideo();
+            //rtcEngine.enableVideo();
+
         }
 
         ImageView iv = (ImageView) view;
@@ -383,29 +395,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         }
     }
 
-    private void shutDownVideo(){
-        RtcEngine rtcEngine = rtcEngine();
-        boolean mVideoMuted1 = true;
-
-        if (mVideoMuted1) {
-            rtcEngine.disableVideo();
-        } else {
-            rtcEngine.enableVideo();
-        }
-
-        //ImageView iv = (ImageView) view;
-
-        //iv.setImageResource(mVideoMuted1 ? R.drawable.btn_video : R.drawable.btn_voice);
-
-        //隐藏小窗口
-        hideLocalView(mVideoMuted1);
-
-        if (mVideoMuted1) {
-            resetToVideoDisabledUI();
-        } else {
-            resetToVideoEnabledUI();
-        }
-    }
 
     private SurfaceView getLocalView() {
         for (HashMap.Entry<Integer, SurfaceView> entry : mUidsList.entrySet()) {
@@ -655,9 +644,9 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
             }
 
             case AGEventHandler.EVENT_TYPE_ON_AUDIO_ROUTE_CHANGED:
-                 notifyHeadsetPlugged((int) data[0]);
+                notifyHeadsetPlugged((int) data[0]);
 
-                 break;
+                break;
 
         }
     }
