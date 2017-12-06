@@ -126,4 +126,12 @@ public class MainActivity extends BaseActivity {
         startActivity(i);
     }
 
+    public void onClickSearchRoom(View view) {
+        forwardToSearch();
+    }
+
+    public void forwardToSearch() {
+
+    }
+
 }
