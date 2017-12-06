@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
             // 3
             // 4
             // 5
+            // 6
             @Override
             public void afterTextChanged(Editable s) {
                 boolean isEmpty = TextUtils.isEmpty(s.toString());
