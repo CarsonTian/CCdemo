@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.ConstantApp;
+import io.agora.openvcall.model.User;
 
 /**
  * Created by tianjq1 on 2017/12/5.
@@ -49,7 +50,7 @@ public class RoomActivity extends BaseActivity {
 
     }
 
-    public void onClickJoin(View view) {
+    public void onClickJoinPosition(View view) {
         boolean ifAudience = false;
         forwardToRoom(ifAudience);
     }
@@ -63,6 +64,7 @@ public class RoomActivity extends BaseActivity {
         //String encryption = v_encryption_key.getText().toString();
         //vSettings().mEncryptionKey = encryption;
 
+
         Intent i = new Intent(RoomActivity.this, ChatActivity.class);
         i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, channelName);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, encryptionKey);
@@ -71,7 +73,7 @@ public class RoomActivity extends BaseActivity {
         startActivity(i);
     }
 
-    public void onClickJoin2(View view) {
+    public void onClickJoinAudience(View view) {
         boolean ifAudience = true;
         forwardToRoom(ifAudience);
     }

@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:onClick="onClickJoin"
+            android:onClick="onClickJoinRoom"
             android:enabled="false"
             android:text="@string/label_join" />
     </LinearLayout>

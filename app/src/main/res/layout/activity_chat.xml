@@ -169,8 +169,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/msg_list"
-            android:layout_toEndOf="@+id/position7"
-            android:layout_toRightOf="@+id/position7"
             android:text="Button"
             android:visibility="gone" />
 
@@ -181,7 +179,7 @@
             android:layout_alignTop="@+id/msg_list"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
-            app:srcCompat="@drawable/ic_account_box" />
+            app:srcCompat="@drawable/ic_photo" />
 
         <ImageView
             android:id="@+id/audience1"

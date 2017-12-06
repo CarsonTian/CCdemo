@@ -34,7 +34,7 @@
             android:layout_alignTop="@+id/msg_list"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
-            android:onClick="onClickJoin"
+            android:onClick="onClickJoinPosition"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
@@ -94,7 +94,7 @@
             android:layout_marginLeft="34dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="30dp"
-            android:onClick="onClickJoin2"
+            android:onClick="onClickJoinAudience"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton

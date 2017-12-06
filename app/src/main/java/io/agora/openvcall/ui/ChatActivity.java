@@ -152,7 +152,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                 rtcEngine.disableVideo(); // 禁止摄像头
                 hideLocalView(mVideoMuted); // 隐藏小窗口
                 resetToVideoDisabledUI();  // 改变背景和按钮
-
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
@@ -163,6 +162,8 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         ImageView mute_voince = (ImageView) findViewById(R.id.button_action_mute);
         if (stutes) {
             mute_voince.setVisibility(View.GONE);
+            RtcEngine rtcEngine = rtcEngine();
+            rtcEngine.muteLocalAudioStream(!mAudioMuted);
         }
 
     }

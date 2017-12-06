@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void onClickJoin(View view) {
+    public void onClickJoinRoom(View view) {
         forwardToRoom();
     }
 
