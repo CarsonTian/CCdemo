@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2">
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,12 +36,20 @@
             android:hint="@string/label_channel_name_hint"
             android:inputType="text" />
 
+        <TextView
+            android:id="@+id/textView_res"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="TextView"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="14dp"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <EditText
                 android:id="@+id/encryption_key"
@@ -55,7 +64,7 @@
                 android:gravity="center"
                 android:hint="@string/label_encryption_key_hint"
                 android:inputType="text"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <Spinner
                 android:id="@+id/encryption_mode"
@@ -73,9 +82,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:onClick="onClickJoinRoom"
             android:enabled="false"
+            android:onClick="onClickJoinRoom"
             android:text="@string/label_join" />
 
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false"
+            android:onClick="onClickCreateRoom"
+            android:text="Create" />
+
     </LinearLayout>
+
 </RelativeLayout>

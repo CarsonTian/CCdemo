@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.ConstantApp;
 
@@ -25,7 +27,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initUIandEvent() {
-        EditText v_channel = (EditText) findViewById(R.id.channel_name);
+        final TextView txt_res = (TextView) findViewById(R.id.textView_res);
+        final EditText v_channel = (EditText) findViewById(R.id.channel_name);
         v_channel.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -37,10 +40,20 @@ public class MainActivity extends BaseActivity {
 
             }
 
+
             @Override
             public void afterTextChanged(Editable s) {
                 boolean isEmpty = TextUtils.isEmpty(s.toString());
                 findViewById(R.id.button_join).setEnabled(!isEmpty);
+                txt_res.setVisibility(View.VISIBLE);
+            }
+        });
+
+        txt_res.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                v_channel.setText(txt_res.getText().toString());
+                txt_res.setVisibility(View.GONE);
             }
         });
 
@@ -125,5 +138,10 @@ public class MainActivity extends BaseActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
+
+    public void onClickCreateRoom(View view) {
+        forwardToRoom();
+    }
+
 
 }
