@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 boolean isEmpty = TextUtils.isEmpty(s.toString());
                 findViewById(R.id.button_join).setEnabled(!isEmpty);
-                findViewById(R.id.button_search).setEnabled(!isEmpty);
             }
         });
 
@@ -126,6 +125,5 @@ public class MainActivity extends BaseActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
-
 
 }

@@ -65,7 +65,6 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="28dp"
                 android:layout_marginStart="2dp" />
-
         </LinearLayout>
 
         <Button
