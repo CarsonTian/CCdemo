@@ -39,30 +39,33 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="14dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/encryption_key"
                 android:layout_width="0dp"
-                android:layout_weight="20"
                 android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="4dp"
+                android:layout_marginStart="30dp"
+                android:layout_weight="20"
                 android:digits="@string/legal_channel_name_characters"
                 android:gravity="center"
                 android:hint="@string/label_encryption_key_hint"
-                android:inputType="text" />
+                android:inputType="text"
+                android:visibility="gone" />
 
             <Spinner
                 android:id="@+id/encryption_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:layout_marginLeft="2dp"
                 android:layout_marginEnd="28dp"
-                android:layout_marginRight="28dp" />
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginStart="2dp" />
+
         </LinearLayout>
 
         <Button
@@ -74,5 +77,15 @@
             android:onClick="onClickJoinRoom"
             android:enabled="false"
             android:text="@string/label_join" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClickSearchRoom"
+            android:enabled="false"
+            android:text="Serach" />
+
     </LinearLayout>
 </RelativeLayout>
