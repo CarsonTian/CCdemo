@@ -11,7 +11,7 @@
         android:id="@+id/grid_video_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <ViewStub
         android:id="@id/small_video_view_dock"
@@ -25,27 +25,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/position6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignTop="@+id/msg_list"
-            android:layout_toLeftOf="@+id/msg_list"
-            android:layout_toStartOf="@+id/msg_list"
-            android:onClick="onClickJoin1"
-            app:srcCompat="@drawable/ic_account_box" />
-
-        <ImageButton
-            android:id="@+id/position7"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@+id/bottom_container"
-            android:layout_alignLeft="@+id/msg_list"
-            android:layout_alignStart="@+id/msg_list"
-            android:layout_marginBottom="16dp"
-            android:onClick="onClickJoin2"
-            app:srcCompat="@drawable/ic_account_box" />
 
         <TextView
             android:id="@+id/channel_name"
@@ -97,16 +76,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_centerInParent="true">
-
-                    <ImageButton
-                        android:id="@+id/button_changeTo_voince"
-                        android:layout_width="54dp"
-                        android:layout_height="match_parent"
-                        android:onClick="onVoiceChatClicked"
-                        android:scaleType="center"
-                        android:src="@drawable/btn_voice"
-                        android:visibility="visible" />
+                    android:layout_centerInParent="true"
+                    android:id="@+id/linearLayout">
 
                     <ImageView
                         android:id="@id/customized_function_id"
@@ -137,6 +108,17 @@
                     android:scaleType="center"
                     android:src="@drawable/btn_filter"
                     android:visibility="invisible" />
+
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/linearLayout"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/linearLayout"
+                    android:onClick="onVoiceChatClicked"
+                    android:scaleType="center"
+                    android:src="@drawable/btn_voice"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -186,10 +168,30 @@
             android:id="@+id/button_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/msg_list"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="Button" />
+            android:layout_below="@+id/msg_list"
+            android:layout_toEndOf="@+id/position7"
+            android:layout_toRightOf="@+id/position7"
+            android:text="Button"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/position1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/msg_list"
+            android:layout_toLeftOf="@+id/msg_list"
+            android:layout_toStartOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageView
+            android:id="@+id/audience1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/msg_list"
+            android:layout_alignStart="@+id/msg_list"
+            android:layout_below="@+id/msg_list"
+            android:layout_marginTop="26dp"
+            app:srcCompat="@drawable/ic_account_box" />
 
     </RelativeLayout>
 </FrameLayout>

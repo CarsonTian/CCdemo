@@ -38,19 +38,10 @@
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
-            android:id="@+id/position2"
+            android:id="@+id/position6"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignTop="@+id/position4"
-            android:layout_toEndOf="@+id/msg_list"
-            android:layout_toRightOf="@+id/msg_list"
-            app:srcCompat="@drawable/ic_account_box" />
-
-        <ImageButton
-            android:id="@+id/position5"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@+id/position4"
+            android:layout_alignTop="@+id/position5"
             android:layout_toEndOf="@+id/msg_list"
             android:layout_toRightOf="@+id/msg_list"
             app:srcCompat="@drawable/ic_account_box" />
@@ -59,14 +50,23 @@
             android:id="@+id/position4"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/position"
+            android:layout_above="@+id/position5"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/position3"
             android:layout_marginTop="18dp"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
-            android:id="@+id/position3"
+            android:id="@+id/position2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignTop="@+id/msg_list"
@@ -75,7 +75,7 @@
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
-            android:id="@+id/position"
+            android:id="@+id/position3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@+id/position1"
@@ -88,12 +88,12 @@
             android:id="@+id/audience1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignLeft="@+id/position4"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/position4"
-            android:layout_marginBottom="54dp"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp"
+            android:layout_alignLeft="@+id/position5"
+            android:layout_alignStart="@+id/position5"
+            android:layout_below="@+id/msg_list"
+            android:layout_marginLeft="34dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="30dp"
             android:onClick="onClickJoin2"
             app:srcCompat="@drawable/ic_account_box" />
 
@@ -109,11 +109,11 @@
             android:id="@+id/audience3"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignEnd="@+id/position2"
-            android:layout_alignRight="@+id/position2"
+            android:layout_alignEnd="@+id/position6"
+            android:layout_alignRight="@+id/position6"
             android:layout_alignTop="@+id/audience2"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginRight="31dp"
             app:srcCompat="@drawable/ic_account_box" />
 
     </RelativeLayout>
