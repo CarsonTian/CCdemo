@@ -53,6 +53,8 @@ import io.agora.rtc.video.VideoCanvas;
 
 public class ChatActivity extends BaseActivity implements AGEventHandler {
 
+    private int seatNo = 0;
+
     private final static Logger log = LoggerFactory.getLogger(ChatActivity.class);
 
     private GridVideoViewContainer mGridVideoViewContainer;
@@ -171,7 +173,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         findViewById(R.id.button_action_speak).setVisibility(View.GONE);
         findViewById(R.id.button_action_leave).setVisibility(View.GONE);
     }
-
 
 
     public void onClickHideIME(View view) {
@@ -559,6 +560,22 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                 doHandleExtraCallback(type, data);
             }
         });
+    }
+
+    public void onClickJoinSeat(View view) {
+        switch (view.getId()) {
+            case R.id.position1:
+                seatNo = 1;
+                joinSeat();
+                break;
+            case R.id.position2:
+                seatNo = 2;
+                break;
+        }
+    }
+    private void joinSeat(){
+        findViewById(R.id.button_action_speak).setVisibility(View.VISIBLE);
+        findViewById(R.id.button_action_leave).setVisibility(View.VISIBLE);
     }
 
     private void doHandleExtraCallback(int type, Object... data) {

@@ -170,6 +170,7 @@
             android:layout_alignTop="@+id/msg_list"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
+            android:onClick="onClickJoinSeat"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
@@ -179,6 +180,7 @@
             android:layout_alignTop="@+id/msg_list"
             android:layout_toEndOf="@+id/msg_list"
             android:layout_toRightOf="@+id/msg_list"
+            android:onClick="onClickJoinSeat"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
@@ -188,7 +190,7 @@
             android:layout_alignTop="@+id/position4"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
-            android:onClick="onClickJoinChannel"
+            android:onClick="onClickJoinSeat"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
@@ -199,6 +201,7 @@
             android:layout_marginTop="26dp"
             android:layout_toEndOf="@+id/msg_list"
             android:layout_toRightOf="@+id/msg_list"
+            android:onClick="onClickJoinSeat"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
@@ -208,6 +211,7 @@
             android:layout_alignTop="@+id/position6"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
+            android:onClick="onClickJoinSeat"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
@@ -218,10 +222,11 @@
             android:layout_marginTop="44dp"
             android:layout_toEndOf="@+id/msg_list"
             android:layout_toRightOf="@+id/msg_list"
+            android:onClick="onClickJoinSeat"
             app:srcCompat="@drawable/ic_account_box" />
 
         <ImageButton
-            android:id="@+id/position7"
+            android:id="@+id/position99"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignLeft="@+id/position1"
@@ -232,19 +237,10 @@
             android:layout_marginTop="17dp"
             app:srcCompat="@drawable/ic_account_box" />
 
-        <ImageButton
-            android:id="@+id/position8"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignTop="@+id/position7"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/ic_account_box" />
-
         <ImageView
             android:id="@+id/button_action_leave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/position8"
             android:layout_alignEnd="@+id/position2"
             android:layout_alignRight="@+id/position2"
             android:layout_marginEnd="29dp"
