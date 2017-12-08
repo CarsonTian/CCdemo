@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,30 +144,35 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
 
 
         // 自动跳转为语音模式
-        Button test = (Button) findViewById(R.id.button_test);
-        test.setOnClickListener(new View.OnClickListener() {
+        changeToVoice();
+
+        // 长按说话，松开闭麦
+        final ImageView button_speak = (ImageView) findViewById(R.id.button_action_speak);
+        button_speak.setClickable(true);
+        button_speak.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                RtcEngine rtcEngine = rtcEngine();
-                mVideoMuted = !mVideoMuted;
-                rtcEngine.disableVideo(); // 禁止摄像头
-                hideLocalView(mVideoMuted); // 隐藏小窗口
-                resetToVideoDisabledUI();  // 改变背景和按钮
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    button_speak.setBackgroundResource(R.color.transparent_75_white);
+                    RtcEngine rtcEngine = rtcEngine();
+                    rtcEngine.muteLocalAudioStream(true);
+                }
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    button_speak.setBackgroundResource(R.drawable.rounded_bg_blue);
+                    RtcEngine rtcEngine = rtcEngine();
+                    rtcEngine.muteLocalAudioStream(false);
+                }
+                return false;
             }
         });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            test.callOnClick();
-        }
-
-        boolean stutes = i.getBooleanExtra(ConstantApp.ACTION_KEY_MEMBER_STUTES, false); // 身份，是否是观众
-        ImageView mute_voince = (ImageView) findViewById(R.id.button_action_mute);
-        if (stutes) {
-            mute_voince.setVisibility(View.GONE);
-            RtcEngine rtcEngine = rtcEngine();
-            rtcEngine.muteLocalAudioStream(!mAudioMuted);
-        }
-
     }
+
+    public void onClickLeave(View view) {
+        findViewById(R.id.button_action_speak).setVisibility(View.GONE);
+        findViewById(R.id.button_action_leave).setVisibility(View.GONE);
+    }
+
+
 
     public void onClickHideIME(View view) {
         log.debug("onClickHideIME " + view);
@@ -396,6 +402,15 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         }
     }
 
+    private void changeToVoice() {
+        RtcEngine rtcEngine = rtcEngine();
+        mVideoMuted = !mVideoMuted;
+        rtcEngine.disableVideo(); // 禁止摄像头
+        hideLocalView(mVideoMuted); // 隐藏小窗口
+        resetToVideoDisabledUI();  // 改变背景和按钮
+        rtcEngine.muteLocalAudioStream(mAudioMuted);
+    }
+
 
     private SurfaceView getLocalView() {
         for (HashMap.Entry<Integer, SurfaceView> entry : mUidsList.entrySet()) {
@@ -444,23 +459,26 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         notifyHeadsetPlugged(mAudioRouting);
     }
 
-    public void onVoiceMuteClicked(View view) {
-        log.info("onVoiceMuteClicked " + view + " " + mUidsList.size() + " video_status: " + mVideoMuted + " audio_status: " + mAudioMuted);
-        if (mUidsList.size() == 0) {
-            return;
-        }
-
-        RtcEngine rtcEngine = rtcEngine();
-        rtcEngine.muteLocalAudioStream(mAudioMuted = !mAudioMuted);
-
-        ImageView iv = (ImageView) view;
-
-        if (mAudioMuted) {
-            iv.setColorFilter(getResources().getColor(R.color.agora_blue), PorterDuff.Mode.MULTIPLY);
-        } else {
-            iv.clearColorFilter();
-        }
-    }
+    /**
+     * // 原静音按钮方法， 暂时弃用
+     * public void onVoiceMuteClicked(View view) {
+     * log.info("onVoiceMuteClicked " + view + " " + mUidsList.size() + " video_status: " + mVideoMuted + " audio_status: " + mAudioMuted);
+     * if (mUidsList.size() == 0) {
+     * return;
+     * }
+     * <p>
+     * RtcEngine rtcEngine = rtcEngine();
+     * rtcEngine.muteLocalAudioStream(mAudioMuted = !mAudioMuted);
+     * <p>
+     * ImageView iv = (ImageView) view;
+     * <p>
+     * if (mAudioMuted) {
+     * iv.setColorFilter(getResources().getColor(R.color.agora_blue), PorterDuff.Mode.MULTIPLY);
+     * } else {
+     * iv.clearColorFilter();
+     * }
+     * }
+     */
 
     @Override
     public void onFirstRemoteVideoDecoded(int uid, int width, int height, int elapsed) {

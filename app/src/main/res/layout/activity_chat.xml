@@ -30,30 +30,30 @@
             android:id="@+id/channel_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="6dp"
-            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:textColor="@android:color/white" />
+            android:textStyle="bold" />
 
         <io.agora.propeller.ui.AGLinearLayout
             android:id="@+id/bottom_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/bottom_action_end_call"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="center_horizontal"
+                android:onClick="onEndCallClicked"
                 android:scaleType="center"
-                android:src="@drawable/btn_endcall"
-                android:onClick="onEndCallClicked" />
+                android:src="@drawable/btn_endcall" />
 
             <RelativeLayout
                 android:id="@+id/bottom_action_container"
@@ -65,19 +65,19 @@
                 <ImageView
                     android:layout_width="54dp"
                     android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/btn_message"
-                    android:onClick="onBtn0Clicked" />
+                    android:onClick="onBtn0Clicked"
+                    android:scaleType="center"
+                    android:src="@drawable/btn_message" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_centerInParent="true"
-                    android:id="@+id/linearLayout">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@id/customized_function_id"
@@ -89,12 +89,11 @@
                         android:visibility="visible" />
 
                     <ImageView
-                        android:id="@+id/button_action_mute"
+                        android:id="@+id/button_action_speak"
                         android:layout_width="54dp"
                         android:layout_height="match_parent"
-                        android:onClick="onVoiceMuteClicked"
                         android:scaleType="center"
-                        android:src="@drawable/btn_mute" />
+                        android:src="@drawable/ic_action_phone_start" />
 
                 </LinearLayout>
 
@@ -124,32 +123,32 @@
 
             <LinearLayout
                 android:id="@+id/msg_input_container"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
+                android:background="@color/dark_black"
                 android:orientation="horizontal"
-                android:background="@color/dark_black">
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="54dp"
                     android:layout_height="match_parent"
-                    android:scaleType="center"
                     android:onClick="onClickHideIME"
+                    android:scaleType="center"
                     android:src="@drawable/btn_keyboard_hide" />
 
                 <EditText
                     android:id="@+id/msg_content"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="20"
                     android:background="@android:color/transparent"
+                    android:hint="@string/msg_say_something"
+                    android:imeActionLabel="@string/label_send"
+                    android:imeOptions="actionSend"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@android:color/white"
-                    android:layout_height="match_parent"
-                    android:hint="@string/msg_say_something"
-                    android:textColorHint="@android:color/white"
-                    android:imeOptions="actionSend"
-                    android:imeActionLabel="@string/label_send" />
+                    android:textColorHint="@android:color/white" />
 
             </LinearLayout>
 
@@ -159,37 +158,99 @@
             android:id="@+id/msg_list"
             android:layout_width="200dp"
             android:layout_height="300dp"
-            android:layout_below="@+id/channel_name"
+            android:layout_above="@+id/bottom_container"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="42dp"
+            android:layout_marginBottom="21dp"
             android:background="@android:color/holo_blue_dark" />
 
-        <Button
-            android:id="@+id/button_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/msg_list"
-            android:text="Button"
-            android:visibility="gone" />
-
-        <ImageView
+        <ImageButton
             android:id="@+id/position1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignTop="@+id/msg_list"
             android:layout_toLeftOf="@+id/msg_list"
             android:layout_toStartOf="@+id/msg_list"
-            app:srcCompat="@drawable/ic_photo" />
+            app:srcCompat="@drawable/ic_account_box" />
 
-        <ImageView
-            android:id="@+id/audience1"
+        <ImageButton
+            android:id="@+id/position2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignLeft="@+id/msg_list"
-            android:layout_alignStart="@+id/msg_list"
-            android:layout_below="@+id/msg_list"
-            android:layout_marginTop="26dp"
+            android:layout_alignTop="@+id/msg_list"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
             app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/position4"
+            android:layout_toLeftOf="@+id/msg_list"
+            android:layout_toStartOf="@+id/msg_list"
+            android:onClick="onClickJoinChannel"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/position2"
+            android:layout_marginTop="26dp"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/position6"
+            android:layout_toLeftOf="@+id/msg_list"
+            android:layout_toStartOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position6"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/position4"
+            android:layout_marginTop="44dp"
+            android:layout_toEndOf="@+id/msg_list"
+            android:layout_toRightOf="@+id/msg_list"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position7"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/position1"
+            android:layout_alignStart="@+id/position1"
+            android:layout_below="@+id/channel_name"
+            android:layout_marginLeft="26dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="17dp"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageButton
+            android:id="@+id/position8"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/position7"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_account_box" />
+
+        <ImageView
+            android:id="@+id/button_action_leave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/position8"
+            android:layout_alignEnd="@+id/position2"
+            android:layout_alignRight="@+id/position2"
+            android:layout_marginEnd="29dp"
+            android:layout_marginRight="29dp"
+            android:onClick="onClickLeave"
+            app:srcCompat="@android:drawable/btn_dialog" />
 
     </RelativeLayout>
 </FrameLayout>

@@ -33,11 +33,6 @@
             android:parentActivityName=".ui.RoomActivity"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".ui.RoomActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/FullscreenTheme" />
-        <activity
             android:name=".ui.SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"

@@ -31,8 +31,7 @@ public class ConstantApp {
     public static final String ACTION_KEY_ENCRYPTION_KEY = "xdL_encr_key_";
     public static final String ACTION_KEY_ENCRYPTION_MODE = "tOK_edsx_Mode";
 
-    // 判断身份
-    public static final String ACTION_KEY_MEMBER_STUTES = "member";
+
 
 
     public static class AppError {
