@@ -2,6 +2,9 @@ package io.agora.openvcall.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,47 +17,95 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.ConstantApp;
+import io.agora.recycleview.RoomInfo;
+import io.agora.recycleview.ViewAdapter;
 
 public class MainActivity extends BaseActivity {
+
+    private SearchView searchView;
+    private List<RoomInfo> list;
+    private List<RoomInfo> findList;
+    private ViewAdapter adapter;
+    private ViewAdapter findAdapter;
+    private RecyclerView mRecyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.room_list);
     }
 
     @Override
     protected void initUIandEvent() {
-        final TextView txt_res = (TextView) findViewById(R.id.textView_res);
+        searchView = (SearchView) findViewById(R.id.searchEdit);
+        findList = new ArrayList<RoomInfo>();
+        iniData();
+        mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ViewAdapter(list);
+        adapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view) {
+                Toast.makeText(MainActivity.this, "item click index = ", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mRecyclerView.setAdapter(adapter);
+
+        searchView.setSubmitButtonEnabled(true); // 增加提交建
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() { // 搜索框监听
+            public boolean onQueryTextSubmit(String res) { // 当提交时监听
+                if (TextUtils.isEmpty(res)) {
+                    Toast.makeText(MainActivity.this, "请输入查找内容！", Toast.LENGTH_SHORT).show();
+                    mRecyclerView.setAdapter(adapter);
+                } else {
+                    findList.clear();
+                    for (int i = 0; i < list.size(); i++) {
+                        RoomInfo info = list.get(i);
+                        if (info.getName().equals(res)) { // 遍历所有item查找是否匹配搜索值
+                            findList.add(info);
+                            break;
+                        }
+                    }
+                    if (findList.size() == 0) {
+                        Toast.makeText(MainActivity.this, "查找的商品不在列表中", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
+                        findAdapter = new ViewAdapter(findList);
+                        mRecyclerView.setAdapter(findAdapter);
+                    }
+                }
+                return true;
+            }
+
+            public boolean onQueryTextChange(String res) { // 搜索框文本改变监听，用于模糊搜索
+                if (TextUtils.isEmpty(res)) {
+                    mRecyclerView.setAdapter(adapter);
+                } else {
+                    findList.clear();
+                    for (int i = 0; i < list.size(); i++) {
+                        RoomInfo information = list.get(i);
+                        if (information.getName().contains(res)) { // 包含输入值的所有结果
+                            findList.add(information);
+                        }
+                    }
+                    findAdapter = new ViewAdapter(findList);
+                    findAdapter.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(findAdapter);
+                }
+                return true;
+            }
+        });
+
         final EditText v_channel = (EditText) findViewById(R.id.channel_name);
-        v_channel.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                boolean isEmpty = TextUtils.isEmpty(s.toString());
-                findViewById(R.id.button_join).setEnabled(!isEmpty);
-                txt_res.setVisibility(View.VISIBLE);
-            }
-        });
-
-        txt_res.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                v_channel.setText(txt_res.getText().toString());
-                txt_res.setVisibility(View.GONE);
-            }
-        });
 
         Spinner encryptionSpinner = (Spinner) findViewById(R.id.encryption_mode);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -110,6 +161,21 @@ public class MainActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // 匹配出事数据
+    private void iniData() {
+        list = new ArrayList<RoomInfo>();
+        RoomInfo iconInfo1 = new RoomInfo();
+        iconInfo1.setName("Beer");
+        iconInfo1.setTime("11.11");
+        iconInfo1.setPeople("12");
+        list.add(iconInfo1);
+        RoomInfo iconInfo2 = new RoomInfo();
+        iconInfo2.setName("feer");
+        iconInfo2.setTime("11.11");
+        iconInfo2.setPeople("12");
+        list.add(iconInfo2);
     }
 
     public void onClickJoinRoom(View view) {

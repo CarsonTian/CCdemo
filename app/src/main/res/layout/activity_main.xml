@@ -36,20 +36,12 @@
             android:hint="@string/label_channel_name_hint"
             android:inputType="text" />
 
-        <TextView
-            android:id="@+id/textView_res"
-            android:layout_width="291dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="TextView"
-            android:visibility="gone" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="14dp"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/encryption_key"
@@ -64,7 +56,7 @@
                 android:gravity="center"
                 android:hint="@string/label_encryption_key_hint"
                 android:inputType="text"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <Spinner
                 android:id="@+id/encryption_mode"
@@ -73,7 +65,8 @@
                 android:layout_marginEnd="28dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="28dp"
-                android:layout_marginStart="2dp" />
+                android:layout_marginStart="2dp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <Button
