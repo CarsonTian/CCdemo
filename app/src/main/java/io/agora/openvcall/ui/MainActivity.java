@@ -54,7 +54,9 @@ public class MainActivity extends BaseActivity {
         adapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view) {
-                Toast.makeText(MainActivity.this, "item click index = ", Toast.LENGTH_SHORT).show();
+                //int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
+                //String cName = findList.get(p).getName();
+                forwardToRoom("55");
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -104,15 +106,13 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        final EditText v_channel = (EditText) findViewById(R.id.channel_name);
+        EditText v_channel = (EditText) findViewById(R.id.channel_name);
+        //Spinner encryptionSpinner = (Spinner) findViewById(R.id.encryption_mode);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.encryption_mode_values, android.R.layout.simple_spinner_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //encryptionSpinner.setAdapter(adapter);
 
-
-        Spinner encryptionSpinner = (Spinner) findViewById(R.id.encryption_mode);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.encryption_mode_values, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        encryptionSpinner.setAdapter(adapter);
-
+        /**
         encryptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -124,9 +124,11 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+         */
 
-        encryptionSpinner.setSelection(vSettings().mEncryptionModeIndex);
+        //encryptionSpinner.setSelection(vSettings().mEncryptionModeIndex);
 
+        /**
         String lastChannelName = vSettings().mChannelName;
         if (!TextUtils.isEmpty(lastChannelName)) {
             v_channel.setText(lastChannelName);
@@ -138,6 +140,7 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(lastEncryptionKey)) {
             v_encryption_key.setText(lastEncryptionKey);
         }
+         */
     }
 
     @Override
@@ -179,22 +182,18 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickJoinRoom(View view) {
-        forwardToRoom();
     }
 
-    public void forwardToRoom() {
-        EditText v_channel = (EditText) findViewById(R.id.channel_name);
-        String channel = v_channel.getText().toString();
-        vSettings().mChannelName = channel;
+    public void forwardToRoom(String cn) {
+        vSettings().mChannelName = cn;
 
-        EditText v_encryption_key = (EditText) findViewById(R.id.encryption_key);
-        String encryption = v_encryption_key.getText().toString();
+        String encryption = ""; // 声望自带加密密码
         vSettings().mEncryptionKey = encryption;
 
         Intent i = new Intent(MainActivity.this, ChatActivity.class);
-        i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, channel);
+        i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, cn);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, encryption);
-        i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, getResources().getStringArray(R.array.encryption_mode_values)[vSettings().mEncryptionModeIndex]);
+        i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, getResources().getStringArray(R.array.encryption_mode_values)[0]); // 0 为默认加密方式
 
         startActivity(i);
     }
@@ -205,7 +204,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickCreateRoom(View view) {
-        forwardToRoom();
     }
 
 

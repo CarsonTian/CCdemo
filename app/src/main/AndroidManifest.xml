@@ -30,7 +30,7 @@
             android:name=".ui.ChatActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".ui.RoomActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".ui.SettingsActivity"
