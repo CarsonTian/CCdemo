@@ -54,9 +54,9 @@ public class MainActivity extends BaseActivity {
         adapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view) {
-                //int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
-                //String cName = findList.get(p).getName();
-                forwardToRoom("55");
+                int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
+                String cName = list.get(p).getName();
+                forwardToRoom(cName);
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -81,6 +81,14 @@ public class MainActivity extends BaseActivity {
                     } else {
                         Toast.makeText(MainActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
                         findAdapter = new ViewAdapter(findList);
+                        findAdapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view) {
+                                int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
+                                String cName = findList.get(p).getName();
+                                forwardToRoom(cName);
+                            }
+                        });
                         mRecyclerView.setAdapter(findAdapter);
                     }
                 }
@@ -100,6 +108,14 @@ public class MainActivity extends BaseActivity {
                     }
                     findAdapter = new ViewAdapter(findList);
                     findAdapter.notifyDataSetChanged();
+                    findAdapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view) {
+                            int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
+                            String cName = findList.get(p).getName();
+                            forwardToRoom(cName);
+                        }
+                    });
                     mRecyclerView.setAdapter(findAdapter);
                 }
                 return true;
