@@ -24,8 +24,18 @@
     <string name="label_title_resolution">Resolution\n(Width * Height)</string>
     <string name="label_title_frame_rate">Frame Rate\n(fps)</string>
     <string name="label_title_bit_rate">Bit Rate\n(kbps)</string>
+    <string name="lable_title_room_name">Input Room Name</string>
+    <string name="dialog_positive_btn">Confirm</string>
+    <string name="dialog_negetive_btn">Cancel</string>
+
+    <string name="dialog_tips_no_name">Please input a name</string>
+
+    <string name="random_max">90000</string>
+    <string name="random_min">10000</string>
+
 
     // DO NOT TRANSLATE
     <string name="bit_rate_value_with_unit">%d kbps</string>
     <string name="frame_rate_value_with_unit">%d fps</string>
+
 </resources>

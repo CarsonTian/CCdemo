@@ -248,5 +248,14 @@
             android:onClick="onClickLeave"
             app:srcCompat="@android:drawable/btn_dialog" />
 
+        <ImageView
+            android:id="@+id/button_action_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/position99"
+            android:layout_alignLeft="@+id/button_action_leave"
+            android:layout_alignStart="@+id/button_action_leave"
+            app:srcCompat="@android:drawable/btn_star_big_off" />
+
     </RelativeLayout>
 </FrameLayout>

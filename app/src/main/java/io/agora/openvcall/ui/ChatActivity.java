@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,6 +94,8 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         Intent i = getIntent();
 
         String channelName = i.getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME);
+
+        boolean ifOwner = i.getBooleanExtra(ConstantApp.IF_OWNER,false);
 
         final String encryptionKey = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY);
 
@@ -167,6 +170,31 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                 return false;
             }
         });
+
+
+        final ImageView btn_lock = (ImageView) findViewById(R.id.button_action_lock);
+
+        if (ifOwner) {
+            btn_lock.setVisibility(View.VISIBLE);
+        } else {
+            btn_lock.setVisibility(View.GONE);
+        }
+
+        final boolean[] iflock = {false};
+        btn_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iflock[0] = !iflock[0];
+                if (iflock[0]) {
+                    Toast.makeText(ChatActivity.this, "asd", Toast.LENGTH_SHORT).show();
+                    btn_lock.setImageResource(R.drawable.btn_endcall);
+                } else {
+                    Toast.makeText(ChatActivity.this, "dsa", Toast.LENGTH_SHORT).show();
+                    btn_lock.setImageResource(R.drawable.btn_speaker);
+                }
+            }
+        });
+
     }
 
     public void onClickLeave(View view) {
@@ -573,7 +601,8 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                 break;
         }
     }
-    private void joinSeat(){
+
+    private void joinSeat() {
         findViewById(R.id.button_action_speak).setVisibility(View.VISIBLE);
         findViewById(R.id.button_action_leave).setVisibility(View.VISIBLE);
     }

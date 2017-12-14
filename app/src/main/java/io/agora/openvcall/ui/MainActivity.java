@@ -1,7 +1,10 @@
 package io.agora.openvcall.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -15,12 +18,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.ConstantApp;
@@ -54,9 +59,10 @@ public class MainActivity extends BaseActivity {
         adapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view) {
+                // 加验证有无加密
                 int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
                 String cName = list.get(p).getName();
-                forwardToRoom(cName);
+                forwardToRoom(cName, false);
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -86,7 +92,7 @@ public class MainActivity extends BaseActivity {
                             public void onItemClick(View view) {
                                 int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
                                 String cName = findList.get(p).getName();
-                                forwardToRoom(cName);
+                                forwardToRoom(cName, false);
                             }
                         });
                         mRecyclerView.setAdapter(findAdapter);
@@ -113,7 +119,7 @@ public class MainActivity extends BaseActivity {
                         public void onItemClick(View view) {
                             int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
                             String cName = findList.get(p).getName();
-                            forwardToRoom(cName);
+                            forwardToRoom(cName, false);
                         }
                     });
                     mRecyclerView.setAdapter(findAdapter);
@@ -122,41 +128,80 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        EditText v_channel = (EditText) findViewById(R.id.channel_name);
+        ImageView btn_create_room = (ImageView) findViewById(R.id.button_create_room);
+        btn_create_room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(v);
+            }
+        });
+
+        //EditText v_channel = (EditText) findViewById(R.id.channel_name);
         //Spinner encryptionSpinner = (Spinner) findViewById(R.id.encryption_mode);
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.encryption_mode_values, android.R.layout.simple_spinner_item);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //encryptionSpinner.setAdapter(adapter);
 
         /**
-        encryptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                vSettings().mEncryptionModeIndex = position;
-            }
+         encryptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        vSettings().mEncryptionModeIndex = position;
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        @Override public void onNothingSelected(AdapterView<?> parent) {
 
-            }
+        }
         });
          */
 
         //encryptionSpinner.setSelection(vSettings().mEncryptionModeIndex);
 
         /**
-        String lastChannelName = vSettings().mChannelName;
-        if (!TextUtils.isEmpty(lastChannelName)) {
-            v_channel.setText(lastChannelName);
-            v_channel.setSelection(lastChannelName.length());
-        }
+         String lastChannelName = vSettings().mChannelName;
+         if (!TextUtils.isEmpty(lastChannelName)) {
+         v_channel.setText(lastChannelName);
+         v_channel.setSelection(lastChannelName.length());
+         }
 
-        EditText v_encryption_key = (EditText) findViewById(R.id.encryption_key);
-        String lastEncryptionKey = vSettings().mEncryptionKey;
-        if (!TextUtils.isEmpty(lastEncryptionKey)) {
-            v_encryption_key.setText(lastEncryptionKey);
-        }
+         EditText v_encryption_key = (EditText) findViewById(R.id.encryption_key);
+         String lastEncryptionKey = vSettings().mEncryptionKey;
+         if (!TextUtils.isEmpty(lastEncryptionKey)) {
+         v_encryption_key.setText(lastEncryptionKey);
+         }
          */
+    }
+
+    private void createDialog(View view) {
+        final EditText edt_room_name = new EditText(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.lable_title_room_name)
+                .setView(edt_room_name)
+                .setPositiveButton(R.string.dialog_positive_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String roomName = edt_room_name.getText().toString().trim();
+                        if (roomName.length() == 0) {
+                            Toast.makeText(MainActivity.this, R.string.dialog_tips_no_name, Toast.LENGTH_SHORT).show();
+                        } else {
+                            int max = Integer.valueOf(getString(R.string.random_max));
+                            int min = Integer.valueOf(getString(R.string.random_min));
+                            int s = (int) (Math.random() * max) + min;
+                            String name = roomName + "#" + s;
+                            forwardToRoom(name, true);
+                            dialog.dismiss();
+                            //edt_room_name.setText("");
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.dialog_negetive_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog viewdialog = builder.create();
+        viewdialog.setCanceledOnTouchOutside(false);
+        viewdialog.show();
     }
 
     @Override
@@ -200,9 +245,8 @@ public class MainActivity extends BaseActivity {
     public void onClickJoinRoom(View view) {
     }
 
-    public void forwardToRoom(String cn) {
+    public void forwardToRoom(String cn, boolean io) {
         vSettings().mChannelName = cn;
-
         String encryption = ""; // 声望自带加密密码
         vSettings().mEncryptionKey = encryption;
 
@@ -210,7 +254,7 @@ public class MainActivity extends BaseActivity {
         i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, cn);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, encryption);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, getResources().getStringArray(R.array.encryption_mode_values)[0]); // 0 为默认加密方式
-
+        i.putExtra(ConstantApp.IF_OWNER, io); // 是否为创建着
         startActivity(i);
     }
 
