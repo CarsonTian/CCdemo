@@ -1,5 +1,6 @@
 package io.agora.openvcall.ui;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,8 +24,11 @@ import java.util.List;
 
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.ConstantApp;
+import io.agora.propeller.Constant;
 import io.agora.recycleview.RoomInfo;
 import io.agora.recycleview.ViewAdapter;
+
+import static android.R.attr.key;
 
 public class MainActivity extends BaseActivity {
 
@@ -52,24 +58,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(View view) {
                 int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
+                RoomInfo ri = list.get(p); // 当前item
                 // 加验证有无加密
-                if (list.get(p).getLock()) {
-                    secreteDialog();
-                    if (flag) {
-                        if (checkSecrete(sec)) {
-                            String cName = list.get(p).getName();
-                            forwardToRoom(cName, false);
-                        } else {
-                            secreteDialog();
-                        }
-                    } else {
-                        // 输入密码时取消
-                    }
+                if (ri.getLock()) {
+                    keyDialog(ri.getKey(), ri.getName());
                 } else {
                     String cName = list.get(p).getName();
                     forwardToRoom(cName, false);
                 }
-
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -97,12 +93,14 @@ public class MainActivity extends BaseActivity {
                         findAdapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view) {
-                                if (checkSecrete(secreteDialog())) {
-                                    int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
-                                    String cName = findList.get(p).getName();
-                                    forwardToRoom(cName, false);
+                                int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
+                                RoomInfo ri = list.get(p); // 当前item
+                                // 加验证有无加密
+                                if (ri.getLock()) {
+                                    keyDialog(ri.getKey(), ri.getName());
                                 } else {
-                                    // 密码错误提示
+                                    String cName = list.get(p).getName();
+                                    forwardToRoom(cName, false);
                                 }
                             }
                         });
@@ -129,8 +127,14 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onItemClick(View view) {
                             int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
-                            String cName = findList.get(p).getName();
-                            forwardToRoom(cName, false);
+                            RoomInfo ri = list.get(p); // 当前item
+                            // 加验证有无加密
+                            if (ri.getLock()) {
+                                keyDialog(ri.getKey(), ri.getName());
+                            } else {
+                                String cName = list.get(p).getName();
+                                forwardToRoom(cName, false);
+                            }
                         }
                     });
                     mRecyclerView.setAdapter(findAdapter);
@@ -185,7 +189,7 @@ public class MainActivity extends BaseActivity {
     private void createDialog(View view) {
         final EditText edt_room_name = new EditText(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.lable_title_room_name)
+        builder.setTitle(R.string.label_title_room_name)
                 .setView(edt_room_name)
                 .setPositiveButton(R.string.dialog_positive_btn, new DialogInterface.OnClickListener() {
                     @Override
@@ -200,11 +204,11 @@ public class MainActivity extends BaseActivity {
                             String name = roomName + "#" + s;
                             forwardToRoom(name, true);
                             dialog.dismiss();
-                            //edt_room_name.setText("");
+                            // 创建上传服务器
                         }
                     }
                 })
-                .setNegativeButton(R.string.dialog_negetive_btn, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_negative_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -245,50 +249,49 @@ public class MainActivity extends BaseActivity {
         iconInfo1.setName("Beer");
         iconInfo1.setTime("11.11");
         iconInfo1.setPeople("12");
-        iconInfo1.setLock(false);
+        iconInfo1.setLock(true);
+        iconInfo1.setKey("123456");
         list.add(iconInfo1);
         RoomInfo iconInfo2 = new RoomInfo();
         iconInfo2.setName("face");
         iconInfo2.setTime("11.11");
         iconInfo2.setPeople("12");
-        iconInfo2.setLock(true);
+        iconInfo2.setLock(false);
         list.add(iconInfo2);
     }
 
-    private boolean checkSecrete(String s) {
-        if (true) {
-            return true;
-        } else {
-            return false;
+    private void keyDialog(final String k, final String name) {
+        final Dialog passwordDialog = new Dialog(MainActivity.this);
+        passwordDialog.setContentView(R.layout.dialog_input_password);
+        //passwordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        final EditText pInput = (EditText)passwordDialog.findViewById(R.id.password_input);
+        ImageView pConfirm = (ImageView)passwordDialog.findViewById(R.id.password_confirm);
+        ImageView pCancel = (ImageView)passwordDialog.findViewById(R.id.password_cancel);
+
+        pConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String key = pInput.getText().toString().trim();
+                if (k.equals(key)) {
+                    forwardToRoom(name, false);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.dialog_tips_wrong_password, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        pCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                passwordDialog.dismiss();
+            }
+        });
+
+        if (passwordDialog != null) {
+            passwordDialog.show();
         }
     }
-
-    private boolean flag;
-    private String sec;
-    private void secreteDialog() {
-        final EditText edt_sec = new EditText(this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.lable_title_room_name)
-                .setView(edt_sec)
-                .setPositiveButton(R.string.dialog_positive_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        flag = true;
-                        sec = edt_sec.getText().toString().trim();
-                }
-                })
-                .setNegativeButton(R.string.dialog_negetive_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        flag = false;
-                        dialog.dismiss();
-                    }
-                });
-        AlertDialog viewDialog = builder.create();
-        viewDialog.setCanceledOnTouchOutside(false);
-        viewDialog.show();
-    }
-
 
 
     public void forwardToRoom(String cn, boolean io) {

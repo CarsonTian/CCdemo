@@ -10,6 +10,7 @@ public class RoomInfo
     private String people;
     private String time;
     private boolean lock;
+    private String key;
 
     public String getName()
     {
@@ -42,5 +43,11 @@ public class RoomInfo
     public void setLock(boolean lock)
     {
         this.lock = lock;
+    }
+
+    public String getKey() {return key;}
+    public void setKey(String key)
+    {
+        this.key = key;
     }
 }
