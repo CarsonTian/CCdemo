@@ -1,5 +1,6 @@
 package io.agora.openvcall.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -180,16 +181,17 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
             btn_lock.setVisibility(View.GONE);
         }
 
-        final boolean[] iflock = {false};
+        final boolean[] lock = {false};
         btn_lock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iflock[0] = !iflock[0];
-                if (iflock[0]) {
-                    Toast.makeText(ChatActivity.this, "asd", Toast.LENGTH_SHORT).show();
+                lock[0] = !lock[0];
+                if (lock[0]) {
+                    keyDialog();
                     btn_lock.setImageResource(R.drawable.btn_endcall);
+
                 } else {
-                    Toast.makeText(ChatActivity.this, "dsa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this, R.string.dialog_title_password_set, Toast.LENGTH_SHORT).show();
                     btn_lock.setImageResource(R.drawable.btn_speaker);
                 }
             }
@@ -197,11 +199,49 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
 
     }
 
+    private void keyDialog() {
+        final Dialog keyDialog = new Dialog(this);
+        keyDialog.setContentView(R.layout.dialog_input_password);
+
+        TextView pTitle = (TextView)keyDialog.findViewById(R.id.password_title);
+        pTitle.setText(R.string.dialog_title_password_set);
+
+        final EditText pInput = (EditText)keyDialog.findViewById(R.id.password_input);
+        final EditText pInput2 = (EditText)keyDialog.findViewById(R.id.password_input2);
+        pInput2.setVisibility(View.VISIBLE);
+        ImageView pConfirm = (ImageView)keyDialog.findViewById(R.id.password_confirm);
+        ImageView pCancel = (ImageView)keyDialog.findViewById(R.id.password_cancel);
+
+        pConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (pInput.getText().toString().trim().equals(pInput2.getText().toString().trim())) {
+                    keyDialog.dismiss();
+                    // 发送服务器
+                } else {
+                    pInput.setText("");
+                    pInput2.setText("");
+                    Toast.makeText(ChatActivity.this,getString(R.string.dialog_password_different),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        pCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keyDialog.dismiss();
+            }
+        });
+
+        if (keyDialog != null) {
+            keyDialog.show();
+        }
+    }
+
     public void onClickLeave(View view) {
         findViewById(R.id.button_action_speak).setVisibility(View.GONE);
         findViewById(R.id.button_action_leave).setVisibility(View.GONE);
     }
-
 
     public void onClickHideIME(View view) {
         log.debug("onClickHideIME " + view);

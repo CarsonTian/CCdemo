@@ -25,11 +25,16 @@
     <string name="label_title_frame_rate">Frame Rate\n(fps)</string>
     <string name="label_title_bit_rate">Bit Rate\n(kbps)</string>
     <string name="label_title_room_name">Input Room Name</string>
+
+    // DIALOG TEXT
     <string name="dialog_positive_btn">Confirm</string>
     <string name="dialog_negative_btn">Cancel</string>
     <string name="dialog_tips_no_name">Please input a name</string>
     <string name="dialog_tips_wrong_password">The password is wrong</string>
-    <string name="dialog_title_password">Input password</string>
+    <string name="dialog_title_password_input">Input password</string>
+    <string name="dialog_title_password_set">Set password</string>
+    <string name="dialog_password_different">The two passwords are different</string>
+    <string name="dialog_password_cancel">密码已关闭</string>
 
 
     <string name="random_max">90000</string>
@@ -39,5 +44,6 @@
     // DO NOT TRANSLATE
     <string name="bit_rate_value_with_unit">%d kbps</string>
     <string name="frame_rate_value_with_unit">%d fps</string>
+
 
 </resources>

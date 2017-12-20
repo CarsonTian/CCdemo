@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -266,8 +267,11 @@ public class MainActivity extends BaseActivity {
         //passwordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         final EditText pInput = (EditText)passwordDialog.findViewById(R.id.password_input);
+        TextView pTitle = (TextView)passwordDialog.findViewById(R.id.password_title);
         ImageView pConfirm = (ImageView)passwordDialog.findViewById(R.id.password_confirm);
         ImageView pCancel = (ImageView)passwordDialog.findViewById(R.id.password_cancel);
+
+        pTitle.setText(R.string.dialog_title_password_input);
 
         pConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,8 +279,10 @@ public class MainActivity extends BaseActivity {
                 String key = pInput.getText().toString().trim();
                 if (k.equals(key)) {
                     forwardToRoom(name, false);
+                    passwordDialog.dismiss();
                 } else {
                     Toast.makeText(MainActivity.this, R.string.dialog_tips_wrong_password, Toast.LENGTH_SHORT).show();
+                    pInput.setText("");
                 }
             }
         });
