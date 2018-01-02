@@ -1,20 +1,23 @@
 package io.agora.openvcall.model;
 
+
 public class Message {
+
+    private String mIcon;
     private User mSender;
-
     private String mContent;
-
     private int mType;
 
-    public Message(int type, User sender, String content) {
+    public Message(int type, User sender, String content, String icon) {
         mType = type;
         mSender = sender;
         mContent = content;
+        mIcon = icon;
+
     }
 
-    public Message(User sender, String content) {
-        this(0, sender, content);
+    public Message(User sender, String content, String icon) {
+        this(0, sender, content, icon);
     }
 
     public User getSender() {
@@ -23,6 +26,11 @@ public class Message {
 
     public String getContent() {
         return mContent;
+    }
+
+    public String getIcon()
+    {
+        return mIcon;
     }
 
     public int getType() {

@@ -22,11 +22,11 @@ public class AGLinearLayout extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        return ViewUtil.checkDoubleTouchEvent(event, this) || super.dispatchTouchEvent(event);
+        return RoomViewUtil.checkDoubleTouchEvent(event, this) || super.dispatchTouchEvent(event);
     }
 
     @Override
     public boolean dispatchKeyEvent(@NonNull KeyEvent event) {
-        return ViewUtil.checkDoubleKeyEvent(event, this) || super.dispatchKeyEvent(event);
+        return RoomViewUtil.checkDoubleKeyEvent(event, this) || super.dispatchKeyEvent(event);
     }
 }

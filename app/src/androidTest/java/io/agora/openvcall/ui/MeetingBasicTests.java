@@ -8,12 +8,12 @@ import com.robotium.solo.Solo;
 import io.agora.openvcall.BuildConfig;
 import io.agora.openvcall.R;
 
-public class BasicTests extends ActivityInstrumentationTestCase2<MainActivity> {
+public class MeetingBasicTests extends ActivityInstrumentationTestCase2<MeetingMainActivity> {
 
     private Solo solo;
 
-    public BasicTests() {
-        super(MainActivity.class);
+    public MeetingBasicTests() {
+        super(MeetingMainActivity.class);
     }
 
     @Override
@@ -35,14 +35,14 @@ public class BasicTests extends ActivityInstrumentationTestCase2<MainActivity> {
 
         solo.unlockScreen();
 
-        solo.assertCurrentActivity("Expected MainActivity activity", "MainActivity");
+        solo.assertCurrentActivity("Expected MeetingMainActivity activity", "MeetingMainActivity");
         solo.clearEditText(0);
         solo.enterText(0, AUTO_TEST_CHANNEL_NAME);
         solo.waitForText(AUTO_TEST_CHANNEL_NAME, 1, 2000L);
 
-        solo.clickOnView(solo.getView(R.id.button_join));
+        solo.clickOnView(solo.getView(R.id.button_create_room));
 
-        String targetActivity = ChatActivity.class.getSimpleName();
+        String targetActivity = MeetingChatActivity.class.getSimpleName();
 
         solo.waitForLogMessage("onJoinChannelSuccess " + AUTO_TEST_CHANNEL_NAME, JOIN_CHANNEL_SUCCESS_THRESHOLD + 1000);
 

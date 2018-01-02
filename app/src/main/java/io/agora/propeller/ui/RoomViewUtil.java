@@ -12,10 +12,10 @@ import io.agora.openvcall.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ViewUtil {
+public class RoomViewUtil {
     protected static final boolean DEBUG_ENABLED = false;
 
-    private final static Logger log = LoggerFactory.getLogger(ViewUtil.class);
+    private final static Logger log = LoggerFactory.getLogger(RoomViewUtil.class);
 
     private static final int DEFAULT_TOUCH_TIMESTAMP = -1; // first time
 

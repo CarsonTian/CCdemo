@@ -8,13 +8,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,19 +23,16 @@ import java.util.List;
 
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.ConstantApp;
-import io.agora.propeller.Constant;
 import io.agora.recycleview.RoomInfo;
-import io.agora.recycleview.ViewAdapter;
+import io.agora.recycleview.RoomViewAdapter;
 
-import static android.R.attr.key;
-
-public class MainActivity extends BaseActivity {
+public class MeetingMainActivity extends MeetingBaseActivity {
 
     private SearchView searchView;
     private List<RoomInfo> list;
     private List<RoomInfo> findList;
-    private ViewAdapter adapter;
-    private ViewAdapter findAdapter;
+    private RoomViewAdapter adapter;
+    private RoomViewAdapter findAdapter;
     private RecyclerView mRecyclerView;
 
 
@@ -53,9 +48,9 @@ public class MainActivity extends BaseActivity {
         findList = new ArrayList<RoomInfo>();
         iniData();
         mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ViewAdapter(list);
-        adapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(MeetingMainActivity.this));
+        adapter = new RoomViewAdapter(list);
+        adapter.setOnItemClickListener(new RoomViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view) {
                 int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
@@ -75,7 +70,7 @@ public class MainActivity extends BaseActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() { // 搜索框监听
             public boolean onQueryTextSubmit(String res) { // 当提交时监听
                 if (TextUtils.isEmpty(res)) {
-                    Toast.makeText(MainActivity.this, "请输入查找内容！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeetingMainActivity.this, "请输入查找内容！", Toast.LENGTH_SHORT).show();
                     mRecyclerView.setAdapter(adapter);
                 } else {
                     findList.clear();
@@ -87,11 +82,11 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                     if (findList.size() == 0) {
-                        Toast.makeText(MainActivity.this, "查找的商品不在列表中", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MeetingMainActivity.this, "查找的商品不在列表中", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MainActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
-                        findAdapter = new ViewAdapter(findList);
-                        findAdapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
+                        Toast.makeText(MeetingMainActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
+                        findAdapter = new RoomViewAdapter(findList);
+                        findAdapter.setOnItemClickListener(new RoomViewAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view) {
                                 int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
@@ -122,9 +117,9 @@ public class MainActivity extends BaseActivity {
                             findList.add(information);
                         }
                     }
-                    findAdapter = new ViewAdapter(findList);
+                    findAdapter = new RoomViewAdapter(findList);
                     findAdapter.notifyDataSetChanged();
-                    findAdapter.setOnItemClickListener(new ViewAdapter.OnItemClickListener() {
+                    findAdapter.setOnItemClickListener(new RoomViewAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view) {
                             int p = (mRecyclerView.getChildAdapterPosition(view)); //  Item 位置序号
@@ -197,7 +192,7 @@ public class MainActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String roomName = edt_room_name.getText().toString().trim();
                         if (roomName.length() == 0) {
-                            Toast.makeText(MainActivity.this, R.string.dialog_tips_no_name, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MeetingMainActivity.this, R.string.dialog_tips_no_name, Toast.LENGTH_SHORT).show();
                         } else {
                             int max = Integer.valueOf(getString(R.string.random_max));
                             int min = Integer.valueOf(getString(R.string.random_min));
@@ -262,7 +257,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void keyDialog(final String k, final String name) {
-        final Dialog passwordDialog = new Dialog(MainActivity.this);
+        final Dialog passwordDialog = new Dialog(MeetingMainActivity.this);
         passwordDialog.setContentView(R.layout.dialog_input_password);
         //passwordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -281,7 +276,7 @@ public class MainActivity extends BaseActivity {
                     forwardToRoom(name, false);
                     passwordDialog.dismiss();
                 } else {
-                    Toast.makeText(MainActivity.this, R.string.dialog_tips_wrong_password, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeetingMainActivity.this, R.string.dialog_tips_wrong_password, Toast.LENGTH_SHORT).show();
                     pInput.setText("");
                 }
             }
@@ -305,7 +300,7 @@ public class MainActivity extends BaseActivity {
         String encryption = ""; // 声望自带加密密码
         vSettings().mEncryptionKey = encryption;
 
-        Intent i = new Intent(MainActivity.this, ChatActivity.class);
+        Intent i = new Intent(MeetingMainActivity.this, MeetingChatActivity.class);
         i.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, cn);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, encryption);
         i.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, getResources().getStringArray(R.array.encryption_mode_values)[0]); // 0 为默认加密方式

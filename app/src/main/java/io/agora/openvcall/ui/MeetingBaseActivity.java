@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public abstract class BaseActivity extends AppCompatActivity {
-    private final static Logger log = LoggerFactory.getLogger(BaseActivity.class);
+public abstract class MeetingBaseActivity extends AppCompatActivity {
+    private final static Logger log = LoggerFactory.getLogger(MeetingBaseActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +136,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return ((AGApplication) getApplication()).getWorkerThread();
     }
 
-    protected final EngineConfig config() {
+    protected final MeetingEngineConfig config() {
         return ((AGApplication) getApplication()).getWorkerThread().getEngineConfig();
     }
 

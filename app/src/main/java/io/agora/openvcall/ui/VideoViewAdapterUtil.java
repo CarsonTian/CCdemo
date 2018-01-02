@@ -18,7 +18,7 @@ import io.agora.openvcall.R;
 import io.agora.propeller.Constant;
 import io.agora.propeller.UserStatusData;
 import io.agora.propeller.VideoInfoData;
-import io.agora.propeller.ui.ViewUtil;
+import io.agora.propeller.ui.RoomViewUtil;
 
 public class VideoViewAdapterUtil {
 
@@ -192,7 +192,7 @@ public class VideoViewAdapterUtil {
 
         if (Constant.SHOW_VIDEO_INFO && user.getVideoInfoData() != null) {
             VideoInfoData videoInfo = user.getVideoInfoData();
-            myHolder.mMetaData.setText(ViewUtil.composeVideoInfoString(context, videoInfo));
+            myHolder.mMetaData.setText(RoomViewUtil.composeVideoInfoString(context, videoInfo));
             myHolder.mVideoInfo.setVisibility(View.VISIBLE);
         } else {
             myHolder.mVideoInfo.setVisibility(View.GONE);

@@ -137,7 +137,7 @@ public class WorkerThread extends Thread {
         ensureRtcEngineReadyLock();
         mRtcEngine.joinChannel(null, channel, "OpenVCall", uid);
 
-        mEngineConfig.mChannel = channel;
+        mMeetingEngineConfig.mChannel = channel;
 
         enablePreProcessor();
         log.debug("joinChannel " + channel + " " + uid);
@@ -160,14 +160,14 @@ public class WorkerThread extends Thread {
 
         disablePreProcessor();
 
-        mEngineConfig.reset();
+        mMeetingEngineConfig.reset();
         log.debug("leaveChannel " + channel);
     }
 
-    private EngineConfig mEngineConfig;
+    private MeetingEngineConfig mMeetingEngineConfig;
 
-    public final EngineConfig getEngineConfig() {
-        return mEngineConfig;
+    public final MeetingEngineConfig getEngineConfig() {
+        return mMeetingEngineConfig;
     }
 
     private final MyEngineEventHandler mEngineEventHandler;
@@ -183,7 +183,7 @@ public class WorkerThread extends Thread {
         }
 
         ensureRtcEngineReadyLock();
-        mEngineConfig.mVideoProfile = vProfile;
+        mMeetingEngineConfig.mVideoProfile = vProfile;
 
         if (!TextUtils.isEmpty(encryptionKey)) {
             mRtcEngine.setEncryptionMode(encryptionMode);
@@ -191,9 +191,9 @@ public class WorkerThread extends Thread {
             mRtcEngine.setEncryptionSecret(encryptionKey);
         }
 
-        mRtcEngine.setVideoProfile(mEngineConfig.mVideoProfile, false);
+        mRtcEngine.setVideoProfile(mMeetingEngineConfig.mVideoProfile, false);
 
-        log.debug("configEngine " + mEngineConfig.mVideoProfile + " " + encryptionMode);
+        log.debug("configEngine " + mMeetingEngineConfig.mVideoProfile + " " + encryptionMode);
     }
 
     public final void preview(boolean start, SurfaceView view, int uid) {
@@ -279,10 +279,10 @@ public class WorkerThread extends Thread {
     public WorkerThread(Context context) {
         this.mContext = context;
 
-        this.mEngineConfig = new EngineConfig();
+        this.mMeetingEngineConfig = new MeetingEngineConfig();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        this.mEngineConfig.mUid = pref.getInt(ConstantApp.PrefManager.PREF_PROPERTY_UID, 0);
+        this.mMeetingEngineConfig.mUid = pref.getInt(ConstantApp.PrefManager.PREF_PROPERTY_UID, 0);
 
-        this.mEngineEventHandler = new MyEngineEventHandler(mContext, this.mEngineConfig);
+        this.mEngineEventHandler = new MyEngineEventHandler(mContext, this.mMeetingEngineConfig);
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,15 +16,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewStub;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -53,18 +49,18 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
 
-public class ChatActivity extends BaseActivity implements AGEventHandler {
+public class MeetingChatActivity extends MeetingBaseActivity implements AGEventHandler {
 
     private int seatNo = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(ChatActivity.class);
+    private final static Logger log = LoggerFactory.getLogger(MeetingChatActivity.class);
 
     private GridVideoViewContainer mGridVideoViewContainer;
 
     private RelativeLayout mSmallVideoViewDock;
 
     // should only be modified under UI thread
-    private final HashMap<Integer, SurfaceView> mUidsList = new HashMap<>(); // uid = 0 || uid == EngineConfig.mUid
+    private final HashMap<Integer, SurfaceView> mUidsList = new HashMap<>(); // uid = 0 || uid == MeetingEngineConfig.mUid
 
     private volatile boolean mVideoMuted = false;
 
@@ -93,15 +89,10 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
         event().addEventHandler(this);
 
         Intent i = getIntent();
-
         String channelName = i.getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME);
-
         boolean ifOwner = i.getBooleanExtra(ConstantApp.IF_OWNER,false);
-
         final String encryptionKey = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY);
-
         final String encryptionMode = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE);
-
         doConfigEngine(encryptionKey, encryptionMode);
 
         mGridVideoViewContainer = (GridVideoViewContainer) findViewById(R.id.grid_video_view_container);
@@ -191,7 +182,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                     btn_lock.setImageResource(R.drawable.btn_endcall);
 
                 } else {
-                    Toast.makeText(ChatActivity.this, R.string.dialog_title_password_set, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeetingChatActivity.this, R.string.dialog_title_password_set, Toast.LENGTH_SHORT).show();
                     btn_lock.setImageResource(R.drawable.btn_speaker);
                 }
             }
@@ -221,7 +212,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                 } else {
                     pInput.setText("");
                     pInput2.setText("");
-                    Toast.makeText(ChatActivity.this,getString(R.string.dialog_password_different),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeetingChatActivity.this,getString(R.string.dialog_password_different),Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -362,8 +353,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
 
                     v.setText("");
 
-                    Message msg = new Message(Message.MSG_TYPE_TEXT,
-                            new User(config().mUid, String.valueOf(config().mUid)), msgStr);
+                    Message msg = new Message(Message.MSG_TYPE_TEXT,new User(config().mUid, String.valueOf(config().mUid)), msgStr, "");
                     notifyMessageChanged(msg);
 
                     return true;
@@ -378,10 +368,10 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
     public void onCustomizedFunctionClicked(View view) {
         log.info("onCustomizedFunctionClicked " + view + " " + mVideoMuted + " " + mAudioMuted + " " + mAudioRouting);
         if (mVideoMuted) {
-            onSwitchSpeakerClicked();
-        } else {
-            onSwitchCameraClicked();
-        }
+        onSwitchSpeakerClicked();
+    } else {
+        onSwitchCameraClicked();
+    }
     }
 
     private void onSwitchCameraClicked() {
@@ -735,7 +725,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
 
                 peerUid = (Integer) data[0];
                 final byte[] content = (byte[]) data[1];
-                notifyMessageChanged(new Message(new User(peerUid, String.valueOf(peerUid)), new String(content)));
+                notifyMessageChanged(new Message(new User(peerUid, String.valueOf(peerUid)), new String(content),""));
 
                 break;
 
@@ -743,7 +733,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler {
                 int error = (int) data[0];
                 String description = (String) data[1];
 
-                notifyMessageChanged(new Message(new User(0, null), error + " " + description));
+                notifyMessageChanged(new Message(new User(0, null), error + " " + description,""));
 
                 break;
             }

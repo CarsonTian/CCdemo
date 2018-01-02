@@ -11,12 +11,12 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MyEngineEventHandler {
-    public MyEngineEventHandler(Context ctx, EngineConfig config) {
+    public MyEngineEventHandler(Context ctx, MeetingEngineConfig config) {
         this.mContext = ctx;
         this.mConfig = config;
     }
 
-    private final EngineConfig mConfig;
+    private final MeetingEngineConfig mConfig;
 
     private final Context mContext;
 
