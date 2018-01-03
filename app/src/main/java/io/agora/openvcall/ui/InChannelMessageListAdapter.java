@@ -17,10 +17,11 @@ import java.util.ArrayList;
 
 import io.agora.openvcall.R;
 import io.agora.openvcall.model.Message;
+import io.agora.openvcall.model.User;
 
 public class InChannelMessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Message> mMsglist;
-
+    private User localUser;
     protected final LayoutInflater mInflater;
 
     public InChannelMessageListAdapter(Activity activity, ArrayList<Message> list) {
@@ -39,8 +40,6 @@ public class InChannelMessageListAdapter extends RecyclerView.Adapter<RecyclerVi
         Message msg = mMsglist.get(position);
 
         MessageHolder myHolder = (MessageHolder) holder;
-        String sender = msg.getSender().name;
-        String myName = ""; // 调本地用户名
 
         // 调取bitmap，需要了解服务器，新写缓存头像代码，生成bitmap
         BitmapFactory.Options opts = new BitmapFactory.Options(); // 限制条件，防止内存溢出。还需要继续设置
@@ -48,14 +47,13 @@ public class InChannelMessageListAdapter extends RecyclerView.Adapter<RecyclerVi
 
         myHolder.msgContent.setText(msg.getContent());
 
-        if (sender.equals(myName)) { // 验证是否是本人发送消息
+        if (true) { // 验证是否是本人发送消息，设想：新建类，存储所需所有信息，在User类中插一个值，一起传送，然后调本地对比
             myHolder.mIconR.setImageBitmap(bitmap); // 头像在右边
             myHolder.msgContent.setGravity(Gravity.END); // 文字右起
         } else {
             myHolder.mIconL.setImageBitmap(bitmap); // 头像在左边
             myHolder.msgContent.setGravity(Gravity.START); // 文字左起
         }
-
     }
 
     @Override

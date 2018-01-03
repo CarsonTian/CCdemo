@@ -39,12 +39,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:label="@string/label_settings" />
-        <activity
-            android:name=".ui.mmm"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:label="@string/label_settings">
-        </activity>
 
     </application>
 
